@@ -1,0 +1,17 @@
+[Unit]
+Description=Run Etherpad-lite, the collaborative editor.
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User=svcvplatx
+Group=svcvplatx
+WorkingDirectory=/opt/vcloudx/etherpad-lite
+Environment=NODE_ENV=production
+#ExecStart=/usr/bin/nodejs --experimental-worker /opt/vcloudx/etherpad-lite/node_modules/ep_etherpad-lite/node/server.js
+ExecStart=/opt/vcloudx/etherpad-lite/bin/run.sh 2>&1 < /dev/null &
+# use mysql plus a complete settings.json to avoid Service hold-off time over, scheduling restart.
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

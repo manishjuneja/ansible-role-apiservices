@@ -1,0 +1,30 @@
+[Unit]
+Description=EnableX Webinar Saas App2
+#Requires=After=mysql.service       # Requires the mysql service to run first
+After=network.target
+
+[Service]
+#PIDFile=
+User=svcvplatx
+Group=svcvplatx
+#Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+WorkingDirectory=/opt/vcloudx/webinarSaasApp2
+ExecStart=/usr/bin/node /opt/vcloudx/webinarSaasApp2/server/server.js
+#ExecStart=/usr/bin/node /opt/vcloudx/webinarSaasApp2/server/server.js >> /opt/vcloudx/var/logs/APINODE1-QA/webinarSaasApp2/vcxWebinarSaasApp2.log 2>&1 &
+Restart=always
+# Restart service after 10 seconds if node service crashes
+RestartSec=10
+#StartLimitInterval=0
+#KillSignal=SIGQUIT
+# Output to log file
+StandardOutput=append:/opt/vcloudx/var/logs/{{ansible_hostname}}/webinarSaasApp2/vcxWebinarSaasApp2.log
+StandardError=append:/opt/vcloudx/var/logs/{{ansible_hostname}}/webinarSaasApp2/vcxWebinarSaasApp2.log
+# Output to syslog
+#StandardOutput=syslog
+#StandardError=syslog
+#SyslogIdentifier=vcxWebinarSaasApp
+
+[Install]
+WantedBy=multi-user.target
+

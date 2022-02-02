@@ -1,0 +1,30 @@
+[Unit]
+Description=EnableX Server API
+#Requires=After=mysql.service       # Requires the mysql service to run first
+After=network.target
+
+[Service]
+#PIDFile=
+User=svcvplatx
+Group=svcvplatx
+#Environment=PATH=/usr/bin:/usr/local/bin
+Environment=NODE_ENV=production
+WorkingDirectory=/opt/vcloudx/serverApi
+#ExecStart=/usr/bin/node /opt/vcloudx/serverApi/server/www.js
+ExecStart=/usr/bin/node /opt/vcloudx/serverApi/server/cluster.js
+Restart=always
+# Restart service after 10 seconds if node service crashes
+RestartSec=10
+#StartLimitInterval=0
+#KillSignal=SIGQUIT
+# Output to log file
+StandardOutput=append:/opt/vcloudx/var/logs/{{ansible_hostname}}/serverApi/vcxServerApi.log
+StandardError=append:/opt/vcloudx/var/logs/{{ansible_hostname}}/serverApi/vcxServerApi.log
+# Output to syslog
+#StandardOutput=syslog
+#StandardError=syslog
+#SyslogIdentifier=vcxServerApi
+
+[Install]
+WantedBy=multi-user.target
+

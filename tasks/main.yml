@@ -1,0 +1,54 @@
+---
+# tasks file for apiservices
+
+- name: Create Log directories
+  file:
+    path: "{{ directorypath }}{{ansible_hostname}}{{ item }}"
+    state: directory
+    owner: svcvplatx
+    group: svcvplatx
+    mode: 0755
+    recurse: yes
+  register: file_output
+  
+  loop:
+    - /fileTransferService
+    - /ccDemoApp
+    - /ccDigiAgentApp
+    - /ccenterApp
+    - /enablexApp
+    - /enablexSaasApp
+    - /enablexSaasApp2
+    - /enablexTTApp
+    - /facex1to1App
+    - /fileTransferApi
+    - /voiceApi
+    - /infraApi
+    - /jsdemoApp
+    - /multiparty_call
+    - /openApi
+    - /voiceRecordingMover
+    - /rtmp9gridApp
+    - /rtmp9gridFullViewApp
+    - /rtmpApp
+    - /serverApi
+    - /serverApiProxy
+    - /voiceASR
+    - /voiceJanusplugin
+    - /webinarApp
+    - /webinarSaasApp
+    - /webinarSaasApp2  
+
+- name: Copy Services for ApiNode.
+  template:
+    src: "{{ item }}"
+    dest: "/etc/systemd/system/"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  with_fileglob:
+    - files/*.service
+
+#- debug: var=file_output
+    
+

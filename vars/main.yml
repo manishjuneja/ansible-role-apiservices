@@ -1,0 +1,4 @@
+---
+# vars file for apiservices
+
+directorypath: /opt/vcloudx/var/logs/

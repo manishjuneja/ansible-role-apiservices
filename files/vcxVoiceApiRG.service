@@ -1,0 +1,29 @@
+[Unit]
+Description=EnableX Voice API
+#Requires=After=mysql.service       # Requires the mysql service to run first
+After=network.target
+
+[Service]
+#PIDFile=
+User=svcvplatx
+Group=svcvplatx
+#Environment=PATH=/usr/bin:/usr/local/bin
+#Environment=NODE_ENV=production
+EnvironmentFile=/home/svcvplatx/rgoyal/voiceApi/.env
+ExecStart=/usr/bin/node /home/svcvplatx/rgoyal/voiceApi/server/Server.js
+Restart=always
+# Restart service after 10 seconds if node service crashes
+RestartSec=10
+#StartLimitInterval=0
+#KillSignal=SIGQUIT
+# Output to log file
+StandardOutput=append:/opt/vcloudx/var/logs/{{ansible_hostname}}/voiceApi/vcxVoiceApi.log
+StandardError=append:/opt/vcloudx/var/logs/{{ansible_hostname}}/voiceApi/vcxVoiceApi.log
+# Output to syslog
+#StandardOutput=syslog
+#StandardError=syslog
+#SyslogIdentifier=vcxVoiceApi
+
+[Install]
+WantedBy=multi-user.target
+

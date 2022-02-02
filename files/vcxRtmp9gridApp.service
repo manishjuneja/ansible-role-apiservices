@@ -1,0 +1,30 @@
+[Unit]
+Description=EnableX Rtmp Client 9grid App
+#Requires=After=mysql.service       # Requires the mysql service to run first
+After=network.target
+
+[Service]
+#PIDFile=
+User=svcvplatx
+Group=svcvplatx
+#Environment=PATH=/usr/bin:/usr/local/bin
+#Environment=NODE_ENV=production
+#WorkingDirectory=/opt/vcloudx/rtmp9gridApp
+ExecStart=/usr/bin/node /opt/vcloudx/rtmp9gridApp/server/server.js
+#ExecStart=/usr/bin/node /opt/vcloudx/rtmp9gridApp/server/server.js >> /opt/vcloudx/var/logs/APINODE1-QA/rtmp9gridApp/vcxRtmp9gridApp.log 2>&1 &
+Restart=always
+# Restart service after 10 seconds if node service crashes
+RestartSec=10
+#StartLimitInterval=0
+#KillSignal=SIGQUIT
+# Output to log file
+StandardOutput=append:/opt/vcloudx/var/logs/{{ansible_hostname}}/rtmp9gridApp/vcxRtmp9gridApp.log
+StandardError=append:/opt/vcloudx/var/logs/{{ansible_hostname}}/rtmp9gridApp/vcxRtmp9gridApp.log
+# Output to syslog
+#StandardOutput=syslog
+#StandardError=syslog
+#SyslogIdentifier=vcxRtmp9gridApp
+
+[Install]
+WantedBy=multi-user.target
+

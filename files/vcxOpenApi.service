@@ -1,0 +1,31 @@
+[Unit]
+Description=EnableX Open API
+#Requires=After=mysql.service       # Requires the mysql service to run first
+After=network.target
+
+[Service]
+#PIDFile=
+User=svcvplatx
+Group=svcvplatx
+#Environment=PATH=/usr/bin:/usr/local/bin
+#Environment=PORT=9083
+#Environment=ENABLEX_VIDEO_API=https://apigw1-qa.enablex.io/video
+#Environment=ENABLEX_VOICE_API=https://apigw1-qa.enablex.io/voice
+WorkingDirectory=/opt/vcloudx/openApi
+ExecStart=/usr/bin/node /opt/vcloudx/openApi/index.js
+Restart=always
+# Restart service after 10 seconds if node service crashes
+RestartSec=10
+#StartLimitInterval=0
+#KillSignal=SIGQUIT
+# Output to log file
+StandardOutput=append:/opt/vcloudx/var/logs/{{ansible_hostname}}/openApi/vcxOpenApi.log
+StandardError=append:/opt/vcloudx/var/logs/{{ansible_hostname}}/openApi/vcxOpenApi.log
+# Output to syslog
+#StandardOutput=syslog
+#StandardError=syslog
+#SyslogIdentifier=vcxOpenApi
+
+[Install]
+WantedBy=multi-user.target
+

@@ -1,0 +1,31 @@
+[Unit]
+Description=EnableX Voice Speech Recognition Service
+#Requires=After=mysql.service       # Requires the mysql service to run first
+After=network.target
+
+[Service]
+#PIDFile=
+User=svcvplatx
+Group=svcvplatx
+#Environment=PATH=/usr/bin:/usr/local/bin
+#Environment=NODE_ENV=production
+#WorkingDirectory=/opt/vcloudx/fileTransferService
+WorkingDirectory=/opt/vcloudx/voiceApi
+EnvironmentFile=/opt/vcloudx/voiceApi/.env
+ExecStart=/usr/bin/node /opt/vcloudx/voiceApi/automatic_speech_recogition/remoteServerRPC.js
+Restart=always
+# Restart service after 10 seconds if node service crashes
+RestartSec=10
+#StartLimitInterval=0
+#KillSignal=SIGQUIT
+# Output to log file
+StandardOutput=append:/opt/vcloudx/var/logs/{{ansible_hostname}}/voiceASR/vcxASR.log
+StandardError=append:/opt/vcloudx/var/logs/{{ansible_hostname}}/voiceASR/vcxASR.log
+# Output to syslog
+#StandardOutput=syslog
+#StandardError=syslog
+#SyslogIdentifier=vcxFileTransferService
+
+[Install]
+WantedBy=multi-user.target
+

@@ -1,0 +1,30 @@
+[Unit]
+Description=EnableX Contact Center Demo App
+#Requires=After=mysql.service       # Requires the mysql service to run first
+After=network.target
+
+[Service]
+#PIDFile=
+User=svcvplatx
+Group=svcvplatx
+#Environment=PATH=/usr/bin:/usr/local/bin
+#Environment=NODE_ENV=production
+#WorkingDirectory=/opt/vcloudx/ccDemoApp
+ExecStart=/usr/bin/node /opt/vcloudx/ccDemoApp/server/server.js
+#ExecStart=/usr/bin/node /opt/vcloudx/ccDemoApp/server/server.js >> /opt/vcloudx/var/logs/APINODE1-QA/ccDemoApp/vcxCcDemoApp.log 2>&1 &
+Restart=always
+# Restart service after 10 seconds if node service crashes
+RestartSec=10
+#StartLimitInterval=0
+#KillSignal=SIGQUIT
+# Output to log file
+StandardOutput=append:/opt/vcloudx/var/logs/{{ansible_hostname}}/ccDemoApp/vcxCcDemoApp.log
+StandardError=append:/opt/vcloudx/var/logs/{{ansible_hostname}}/ccDemoApp/vcxCcDemoApp.log
+# Output to syslog
+#StandardOutput=syslog
+#StandardError=syslog
+#SyslogIdentifier=vcxCcDemoApp
+
+[Install]
+WantedBy=multi-user.target
+
